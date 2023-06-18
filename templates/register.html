@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock title %}
+
+{% block body %}
+    <script>
+        const matchPassword = ()=>{
+            document.getElementById('passwordAlert').style.display = 'none';
+            let tpassword = document.getElementById('tpassword').value;
+            let password = document.getElementById('password').value;
+            if(tpassword!=password){
+                document.getElementById('passwordAlert').style.display = 'block';
+            }
+        }
+    </script>
+
+    <form action="/register" method="POST" class="container">
+        <div class="mb-3">
+        <label for="fname" class="form-label">First Name</label>
+        <input type="text" name="fname" class="form-control" id="fname" required>
+        </div>
+        <div class="mb-3">
+        <label for="lname" class="form-label">Last Name</label>
+        <input type="text" name="lname" class="form-control" id="lname" required>
+        </div>
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" id="username" required>
+        </div>
+        <div class="mb-3">
+        <label for="tpassword" class="form-label">Password</label>
+        <input type="password" name="tpassword" class="form-control" id="tpassword" required>
+        </div>
+        <div class="mb-3">
+        <label for="password" class="form-label">Confirm Password</label>
+        <input type="password" name="password" class="form-control" id="password" required onkeyup="matchPassword()">
+            <div class="alert alert-danger" role="alert" id="passwordAlert" style="display: none;">
+                Password must match with confirm password!
+            </div>
+        </div>
+        {% if res|length!=0 %}
+            <div class="alert alert-warning" role="alert">
+                {{res}}
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a href="/login" class="btn btn-success" style="float: right;">Login</a>
+    </form>
+{% endblock body %}

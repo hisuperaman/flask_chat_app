@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block body %}
+
+<script>
+    function disableSend(){
+        input = document.getElementById('msg').value;
+        btn = document.getElementById('sendBtn');
+        if (input==''){
+            btn.disabled = true;
+        }
+        else{
+            btn.disabled = false;
+        }
+    }
+
+    function disableBtns(){
+        document.getElementById('sendBtn').disabled = true;
+        document.getElementById('deleteMsg').disabled = true;
+        document.getElementById('clearChat').disabled = true;
+        return true;
+    }
+</script>
+
+<div class="container">
+    <h3>{{logged_usr.firstname}} {{logged_usr.lastname}}</h3>
+    <a href="/logout" class="btn btn-primary" style="float: right;">Logout</a>
+</div>
+    {% if session['uid']==admin.uid %}
+        <div class="container">
+            <h3>Logged in as Admin
+            <a href="/admin" class="btn btn-secondary" style="float: right;">Admin Panel</a>
+            </h3>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="container" style="overflow-y: scroll; max-height: 235px;">
+            <input type="hidden" name="sessionUID" id="sessionUID" value="{{session['uid']}}">
+            <ul class="list-group" id="chat_box">
+            {% for msg in msgs|reverse %}
+                <li class="list-group-item list-group-item-dark"><span style="color: blue; font-weight: bolder;">{{msg.username}}:</span> {{msg.msg}}<span style="float: right;">{{msg.timestamp}}</span>
+                    <input type="hidden" class="msgids" name="msgid" id="msgID" value="{{msg.msgid}}">
+                    {% if session['uid']==msg['uid'] or session['uid']==admin.uid %}
+                        <div><button type="button" class="btn btn-danger" style="float: right;" id="deleteMsg" onclick="deleteBtn.call(this)">Delete</button></div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="container">
+            <div class="mb-3">
+                <label for="msg" class="form-label">Message</label>
+                <textarea class="form-control" name="msg" id="msg" rows="3" onkeyup="disableSend()"></textarea>
+                <button type="button" class="btn btn-success" id="sendBtn" disabled>Send &gt;</button>
+            </div>
+        <!-- <button type="button" id="reloadChat" class="btn btn-success" onclick="location.reload();" style="float: right;">Reload Chats</button> -->
+        {% if session['uid']==admin.uid %}
+                <button type="button" onclick="clearAllBtn()" id="clearChat" class="btn btn-outline-danger" style="float: right;">Clear Chat</button>
+        {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js"></script>
+    <script src="{{url_for('static', filename='js/socket_con.js')}}"></script>
+{% endblock body %}</body></html>

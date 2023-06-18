@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Admin{% endblock title %}
+{% block body %}
+{% if users|length==0 %}
+    <h3 class="my-3">No pending approvals</h3>
+{% else %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">UID</th>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Username</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pending_usr in users %}
+        <tr>
+            <th scope="row">{{pending_usr.uid}}</th>
+            <td>{{pending_usr.firstname}}</td>
+            <td>{{pending_usr.lastname}}</td>
+            <td>{{pending_usr.username}}</td>
+            <td><form method="POST">
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-success" formaction="/accept/{{pending_usr.uid}}">Accept</button>
+                    <button type="submit" class="btn btn-danger" formaction="/decline/{{pending_usr.uid}}">Decline</button>
+                </div>
+            </form></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+<a href="/home" class="btn btn-success">Chats</a>
+<a href="/admin_users" class="btn btn-success">Users</a>
+{% endblock body %}
