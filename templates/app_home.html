@@ -4,8 +4,8 @@
 
 <script>
     function disableSend(){
-        input = document.getElementById('msg').value;
-        btn = document.getElementById('sendBtn');
+        let input = document.getElementById('msg').value;
+        let btn = document.getElementById('sendBtn');
         if (input==''){
             btn.disabled = true;
         }
@@ -63,4 +63,4 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.2/socket.io.js"></script>
     <script src="{{url_for('static', filename='js/socket_con.js')}}"></script>
-{% endblock body %}</body></html>
+{% endblock body %}
