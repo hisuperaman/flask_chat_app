@@ -1,6 +1,7 @@
 const socket = io();
 
 document.getElementById('sendBtn').addEventListener('click', function(){
+    document.getElementById('sendBtn').disabled = true;
     let msg = document.getElementById('msg').value;
     document.getElementById('msg').value = "";
     socket.emit('sendMsg', msg);
