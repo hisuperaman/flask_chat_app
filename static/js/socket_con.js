@@ -12,7 +12,7 @@ socket.on('chat', function(data){
     let msgStr = 
     `<li class="list-group-item list-group-item-dark themsg"><div><span style="color: blue; font-weight: bolder;">${data['msgUsername']}:</span> <span class="themsg">${data['msg']}</span></div>
     <input type="hidden" class="msgids" name="msgid" id="msgID" value="${data['msgID']}">
-    <div style="float: left;">${data['msgTimestamp']}`
+    <div style="float: left; width: 100%;"><b>${data['msgTimestamp']}</b>`
     
     if (data['msgUID']==sessionUID || sessionUID==data['adminUID']){
         msgStr +=
