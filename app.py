@@ -200,7 +200,7 @@ def decline(uid):
         db.session.commit()
     return redirect('/admin')
 
-@app.route('/admin_users/')
+@app.route('/admin_users')
 def admin_users():
     if session.get('uid'):
         users = logininfo.query.all()
