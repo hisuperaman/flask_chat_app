@@ -10,7 +10,7 @@ document.getElementById('sendBtn').addEventListener('click', function(){
 socket.on('chat', function(data){
     let sessionUID = document.getElementById('sessionUID').value;
     let msgStr = 
-    `<li class="list-group-item list-group-item-dark themsg"><span style="color: blue; font-weight: bolder;">${data['msgUsername']}:</span> ${data['msg']}<span style="float: right;">${data['msgTimestamp']}</span>
+    `<li class="list-group-item list-group-item-dark themsg"><span style="color: blue; font-weight: bolder;">${data['msgUsername']}:</span> <span class="themsg">${data['msg']}</span><span style="float: right;">${data['msgTimestamp']}</span>
     <input type="hidden" class="msgids" name="msgid" id="msgID" value="${data['msgID']}">`
     
     if (data['msgUID']==sessionUID || sessionUID==data['adminUID']){
