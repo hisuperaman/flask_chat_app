@@ -249,7 +249,7 @@ def handle_clearchat():
     db.session.commit()
     emit('clearAllChat', broadcast=True)
 
-if __name__=='__main__':
+# if __name__=='__main__':
     # with app.app_context():
     #     db.create_all()
-    socketio.run(app, debug=True, host='192.168.6.145', port=7777)
+    # socketio.run(app, debug=True, host='192.168.6.145', port=7777)
