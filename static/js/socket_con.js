@@ -10,20 +10,21 @@ document.getElementById('sendBtn').addEventListener('click', function(){
 socket.on('chat', function(data){
     let sessionUID = document.getElementById('sessionUID').value;
     let msgStr = 
-    `<li class="list-group-item list-group-item-dark themsg"><span style="color: blue; font-weight: bolder;">${data['msgUsername']}:</span> <span class="themsg">${data['msg']}</span><span style="float: right;">${data['msgTimestamp']}</span>
-    <input type="hidden" class="msgids" name="msgid" id="msgID" value="${data['msgID']}">`
+    `<li class="list-group-item list-group-item-dark themsg"><span style="color: blue; font-weight: bolder;">${data['msgUsername']}:</span> <span class="themsg">${data['msg']}</span>
+    <input type="hidden" class="msgids" name="msgid" id="msgID" value="${data['msgID']}">
+    <div style="float: left;">${data['msgTimestamp']}`
     
     if (data['msgUID']==sessionUID || sessionUID==data['adminUID']){
         msgStr +=
-        `<div><button type="button" class="btn btn-danger" style="float: right;" id="deleteMsg" onclick="deleteBtn.call(this)">Delete</button></div>`
+        `<button type="button" class="btn btn-danger" style="float: right;" id="deleteMsg" onclick="deleteBtn.call(this)">Delete</button>`
     }
-    msgStr += '</li>';
+    msgStr += '</div></li>';
     document.getElementById('chat_box').innerHTML = msgStr + document.getElementById('chat_box').innerHTML;
 });
 
 function deleteBtn(){
     let msgID = this.parentElement.parentElement.children;
-    msgID = msgID[3].value
+    msgID = msgID[2].value
     // console.log(msgID)
     socket.emit('deleteMsg', msgID);
 }
