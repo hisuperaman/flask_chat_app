@@ -8,8 +8,6 @@ from pytz import timezone
 # import tzlocal
 from flask_socketio import SocketIO, emit
 
-os.environ['PYTHONHASHSEED'] = '0'
-
 app = Flask(__name__)
 socketio = SocketIO(app)
 
@@ -29,7 +27,6 @@ class pending_approvals(db.Model):
     lastname = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
-    salt = db.Column(db.String, nullable=False)
 
 class app_admins(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
@@ -37,7 +34,6 @@ class app_admins(db.Model):
     lastname = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
-    salt = db.Column(db.String, nullable=False)
 
 class logininfo(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
@@ -45,7 +41,6 @@ class logininfo(db.Model):
     lastname = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
-    salt = db.Column(db.String, nullable=False)
     chats = db.relationship('chats', backref='logininfo', lazy=True)
 
 class chats(db.Model):
@@ -75,17 +70,15 @@ def index():
 def login():
     if app_admins.query.filter_by(uid=1111).first()==None:
         admin_password = "#Aman433"
-        admin_salt = random.randint(1000, 9999)
-        admin_password = hash(f"{admin_password}{admin_salt}")
         app_admins.query.delete()
         db.session.commit()
-        onlyadmin = app_admins(uid=1111, firstname='Aman', lastname='Kumar', username='aman', password=admin_password, salt=admin_salt)
+        onlyadmin = app_admins(uid=1111, firstname='Aman', lastname='Kumar', username='aman', password=admin_password)
         db.session.add(onlyadmin)
         db.session.commit()
 
         logininfo.query.delete()
         db.session.commit()
-        admin = logininfo(uid=1111, firstname='Aman', lastname='Kumar', username='aman', password=admin_password, salt=admin_salt)
+        admin = logininfo(uid=1111, firstname='Aman', lastname='Kumar', username='aman', password=admin_password)
         db.session.add(admin)
         db.session.commit()
 
@@ -105,10 +98,8 @@ def login():
             if username in usernames:
                 for user in users:
                     if username==user.username:
-                        password = f"{usr_passsword}{user.salt}"
-                        hashedPassword = str(hash(password))
 
-                        if user.password==hashedPassword:
+                        if user.password==usr_passsword:
                             session['uid'] = user.uid
                         else:
                             res = "Incorrect password"
@@ -170,10 +161,7 @@ def register():
                 continue
             break
         try:
-            salt = random.randint(1000, 9999)
-            hashedPwd = f"{password}{salt}"
-            hashedPwd = hash(hashedPwd)
-            user = pending_approvals(uid=newuid, firstname=firstname, lastname=lastname, username=username, password=hashedPwd, salt=salt)
+            user = pending_approvals(uid=newuid, firstname=firstname, lastname=lastname, username=username, password=password)
             db.session.add(user)
             db.session.commit()
         except Exception as e:
@@ -196,7 +184,7 @@ def admin():
 def accept(uid):
     if request.method=='POST':
         req_user = pending_approvals.query.filter_by(uid=uid).first()
-        user = logininfo(uid=req_user.uid, firstname=req_user.firstname, lastname=req_user.lastname, username=req_user.username, password=req_user.password, salt=req_user.salt)
+        user = logininfo(uid=req_user.uid, firstname=req_user.firstname, lastname=req_user.lastname, username=req_user.username, password=req_user.password)
         db.session.add(user)
         db.session.commit()
         req_user = pending_approvals.query.filter_by(uid=uid).first()
