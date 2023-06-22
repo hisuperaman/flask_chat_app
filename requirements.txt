@@ -12,6 +12,7 @@ Flask-SocketIO==5.3.4
 Flask-SQLAlchemy==3.0.3
 gevent==22.10.2
 greenlet==2.0.2
+gevent-websocket==0.10.1
 gunicorn==20.1.0
 h11==0.14.0
 importlib-metadata==6.6.0
