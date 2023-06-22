@@ -17,7 +17,7 @@ app.config['SESSION_TYPE'] = "filesystem"
 
 Session(app=app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///appdata.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://mychatapp-main-db-07d7e0fd013794e5e:zfBkq4AhjQHUEPNHdJbJTuDkfkPMvH@user-prod-us-east-2-1.cluster-cfi5vnucvv3w.us-east-2.rds.amazonaws.com:5432/mychatapp-main-db-07d7e0fd013794e5e"
 
 db = SQLAlchemy(app=app)
 
