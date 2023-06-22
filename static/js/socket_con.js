@@ -23,7 +23,7 @@ socket.on('chat', function(data){
 
 function deleteBtn(){
     let msgID = this.parentElement.parentElement.children;
-    msgID = msgID[2].value
+    msgID = msgID[3].value
     // console.log(msgID)
     socket.emit('deleteMsg', msgID);
 }
