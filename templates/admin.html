@@ -31,6 +31,6 @@
     </tbody>
 </table>
 {% endif %}
-<a href="/home" class="btn btn-success">Chats</a>
-<a href="/admin_users" class="btn btn-success">Users</a>
+<a href="{{ url_for('home') }}" class="btn btn-success">Chats</a>
+<a href="{{ url_for('admin_allusers') }}" class="btn btn-success">Users</a>
 {% endblock body %}
