@@ -41,7 +41,7 @@
             {% for msg in msgs|reverse %}
                 <li class="list-group-item list-group-item-dark"><div><span style="color: blue; font-weight: bolder;">{{msg.username}}:</span> <span class="themsg">{{msg.msg}}</span></div>
                     <input type="hidden" class="msgids" name="msgid" id="msgID" value="{{msg.msgid}}">
-                    <div style="float: left;">{{msg.timestamp}}
+                    <div style="float: left; width: 100%;">{{msg.timestamp}}
                     {% if session['uid']==msg['uid'] or session['uid']==admin.uid %}
                         <button type="button" class="btn btn-danger" style="float: right;" id="deleteMsg" onclick="deleteBtn.call(this)">Delete</button>
                     {% endif %}
