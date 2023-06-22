@@ -39,7 +39,7 @@
             <input type="hidden" name="sessionUID" id="sessionUID" value="{{session['uid']}}">
             <ul class="list-group" id="chat_box">
             {% for msg in msgs|reverse %}
-                <li class="list-group-item list-group-item-dark"><span style="color: blue; font-weight: bolder;">{{msg.username}}:</span> {{msg.msg}}<span style="float: right;">{{msg.timestamp}}</span>
+                <li class="list-group-item list-group-item-dark"><span style="color: blue; font-weight: bolder;">{{msg.username}}:</span> <p>{{msg.msg}}</p><span style="float: right;">{{msg.timestamp}}</span>
                     <input type="hidden" class="msgids" name="msgid" id="msgID" value="{{msg.msgid}}">
                     {% if session['uid']==msg['uid'] or session['uid']==admin.uid %}
                         <div><button type="button" class="btn btn-danger" style="float: right;" id="deleteMsg" onclick="deleteBtn.call(this)">Delete</button></div>
