@@ -10,7 +10,7 @@ document.getElementById('sendBtn').addEventListener('click', function(){
 socket.on('chat', function(data){
     let sessionUID = document.getElementById('sessionUID').value;
     let msgStr = 
-    `<li class="list-group-item list-group-item-dark themsg"><span style="color: blue; font-weight: bolder;">${data['msgUsername']}:</span> <span class="themsg">${data['msg']}</span>
+    `<li class="list-group-item list-group-item-dark themsg"><div><span style="color: blue; font-weight: bolder;">${data['msgUsername']}:</span> <span class="themsg">${data['msg']}</span></div>
     <input type="hidden" class="msgids" name="msgid" id="msgID" value="${data['msgID']}">
     <div style="float: left;">${data['msgTimestamp']}`
     
@@ -24,7 +24,7 @@ socket.on('chat', function(data){
 
 function deleteBtn(){
     let msgID = this.parentElement.parentElement.children;
-    msgID = msgID[2].value
+    msgID = msgID[1].value
     // console.log(msgID)
     socket.emit('deleteMsg', msgID);
 }
