@@ -12,8 +12,6 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 
 app.config['SECRET_KEY'] = 'ajdfklje!'
-app.config['SESSION_PERMANENT'] = True
-app.config['SESSION_TYPE'] = "filesystem"
 
 Session(app=app)
 
@@ -21,6 +19,13 @@ Session(app=app)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 
 db = SQLAlchemy(app=app)
+
+app.config['SESSION_PERMANENT'] = True
+app.config['SESSION_TYPE'] = "sqlalchemy"
+app.config['SESSION_SQLALCHEMY'] = db
+app.config['SESSION_SQLALCHEMY_TABLE'] = 'session'
+
+Session(app=app)
 
 class pending_approvals(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
