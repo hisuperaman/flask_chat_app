@@ -138,6 +138,8 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if session.get('uid'):
+        return redirect('/home')
     if request.method=='POST':
         form = request.form
         username = form['username'].strip().lower()
