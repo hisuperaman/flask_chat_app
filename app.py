@@ -17,6 +17,7 @@ app.config['SESSION_TYPE'] = "filesystem"
 
 Session(app=app)
 
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///appdata.db"
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 
 db = SQLAlchemy(app=app)
@@ -249,7 +250,5 @@ def handle_clearchat():
     db.session.commit()
     emit('clearAllChat', broadcast=True)
 
-# if __name__=='__main__':
-    # with app.app_context():
-        # db.create_all()
-    # socketio.run(app)
+if __name__=='__main__':
+    socketio.run(app, debug=True)
