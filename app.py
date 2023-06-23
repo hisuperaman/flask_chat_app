@@ -17,7 +17,7 @@ app.config['SESSION_TYPE'] = "filesystem"
 
 Session(app=app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app_data.db"
 
 db = SQLAlchemy(app=app)
 
