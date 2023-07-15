@@ -122,7 +122,7 @@ def login():
 @app.route('/home')
 def home():
     if session.get('uid'):
-        msgs = chats.query.all()
+        msgs = chats.query.order_by(chats.timestamp).all()
         admin = app_admins.query.filter_by(uid=1111).first()
         logged_usr = logininfo.query.filter_by(uid=session['uid']).first()
         current_msg = chats.query.filter_by(uid=session['uid']).order_by(chats.timestamp.desc()).first()
